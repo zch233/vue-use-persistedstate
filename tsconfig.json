@@ -1,7 +1,6 @@
 {
   "extends": "zch-tsconfig",
   "compilerOptions": {
-    "outDir": "./dist",
-    "module": "CommonJS"
+    "outDir": "./dist"
   }
 }
