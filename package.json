@@ -1,6 +1,6 @@
 {
   "name": "gupo-vue3-persistedstate",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": "git@codeup.aliyun.com:gupo/node-modules/gupo-vue3-persistedstate.git",
