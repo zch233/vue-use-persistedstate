@@ -4,38 +4,42 @@ import CryptoJS from 'crypto-js';
 
 let storeKey = ''
 
-const initOptions = {
-  serializer: {
-    read: (v: any) => v ? JSON.parse(decrypt(v)) : null,
-    write: (v: any) => encrypt(JSON.stringify(v)),
-  },
-}
-
 export type Data = {[key: string]: any}
 
-export function createStore(key: string='please-assign-value', options: UseStorageOptions<Data>) {
+interface Option extends UseStorageOptions<Data> {
+  crypto?: boolean;
+}
+
+export function createStore(key: string='please-assign-value', options?: Option) {
   storeKey = key
+  const initOptions: UseStorageOptions<Data> = {}
+  if (options?.crypto) {
+    initOptions.serializer = {
+      read: (v: any) => v ? JSON.parse(decrypt(v)) : null,
+      write: (v: any) => encrypt(JSON.stringify(v)),
+    }
+  }
   const storeLocalStorage = useLocalStorage<Data>(key, {}, {...initOptions, ...options})
   const storeSessionStorage = useSessionStorage<Data>(key, {}, {...initOptions, ...options})
   return {
     useLocalStorage: (key: string, initialValue: any) => {
       const store = storeLocalStorage
       store.value = {...store.value, [key]: store.value[key] || initialValue }
-      return toRefs(store.value)[key]
+      return toRefs(store.value)[key]!
     },
     useSessionStorage: (key: string, initialValue: any) => {
       const store = storeSessionStorage
       store.value = {...store.value, [key]: store.value[key] || initialValue }
-      return toRefs(store.value)[key]
+      return toRefs(store.value)[key]!
     }
   }
 }
 
 export const decrypt = (data: any) => {
-  let key = CryptoJS.MD5(storeKey).toString();
-  let iv = key.substring(0, 16);
+  const key = CryptoJS.MD5(storeKey).toString();
+  const iv = key.substring(0, 16);
 
-  let decrypted = CryptoJS.AES.decrypt(data, CryptoJS.enc.Utf8.parse(key), {
+  const decrypted = CryptoJS.AES.decrypt(data, CryptoJS.enc.Utf8.parse(key), {
     iv: CryptoJS.enc.Utf8.parse(iv),
     mode: CryptoJS.mode.CBC,
     padding: CryptoJS.pad.Pkcs7,
@@ -45,11 +49,11 @@ export const decrypt = (data: any) => {
 };
 
 export const encrypt = (data: any) => {
-  let key = CryptoJS.MD5(storeKey).toString();
-  let iv = key.substring(0, 16);
+  const key = CryptoJS.MD5(storeKey).toString();
+  const iv = key.substring(0, 16);
 
-  let content = CryptoJS.enc.Utf8.parse(data);
-  let encrypted = CryptoJS.AES.encrypt(content, CryptoJS.enc.Utf8.parse(key), {
+  const content = CryptoJS.enc.Utf8.parse(data);
+  const encrypted = CryptoJS.AES.encrypt(content, CryptoJS.enc.Utf8.parse(key), {
     iv: CryptoJS.enc.Utf8.parse(iv),
     mode: CryptoJS.mode.CBC,
     padding: CryptoJS.pad.Pkcs7,
