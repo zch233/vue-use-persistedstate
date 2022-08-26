@@ -1,0 +1,27 @@
+{
+  "name": "gupo-vue3-persistedstate",
+  "version": "0.0.1",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": "git@codeup.aliyun.com:gupo/node-modules/gupo-vue3-persistedstate.git",
+  "author": "张超 <529743595@qq.com>",
+  "license": "MIT",
+  "files": [
+    "dist/*"
+  ],
+  "dependencies": {
+    "@vueuse/core": "9.1.1",
+    "crypto-js": "4.1.1"
+  },
+  "devDependencies": {
+    "@types/crypto-js": "4.1.1",
+    "vue": "3.2.37",
+    "zch-tsconfig": "1.0.1"
+  },
+  "peerDependencies": {
+    "vue": ">=3"
+  },
+  "publishConfig": {
+    "registry": "https://packages.aliyun.com/5eb3e37038076f00011bcd4a/npm/npm-registry/"
+  }
+}
