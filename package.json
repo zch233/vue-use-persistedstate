@@ -16,7 +16,7 @@
   "devDependencies": {
     "@types/crypto-js": "4.1.1",
     "vue": "3.2.37",
-    "zch-tsconfig": "1.0.1"
+    "zch-tsconfig": "^1.0.3"
   },
   "peerDependencies": {
     "vue": ">=3"

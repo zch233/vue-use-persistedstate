@@ -201,7 +201,7 @@ vue@3.2.37:
     "@vue/server-renderer" "3.2.37"
     "@vue/shared" "3.2.37"
 
-zch-tsconfig@1.0.1:
-  version "1.0.1"
-  resolved "https://registry.npmmirror.com/zch-tsconfig/-/zch-tsconfig-1.0.1.tgz#73889642eb7815c1eddcfa4a6cdd7e5503599d5b"
-  integrity sha512-V/JwHHgbsav442CSsurbigkToJsxOYtOa7T/xGDs7mmc4E6frUXTbizaQjHA4CKgmXezNoFwF/+2oPUkrsE7Xg==
+zch-tsconfig@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.npmjs.org/zch-tsconfig/-/zch-tsconfig-1.0.3.tgz#e64735a126c96642970629fe84b698aaee18b0da"
+  integrity sha512-PCRKa+c6YfCUcj4JYy1z2mz3+k9AXoOTtWcrq69FeQglUqm7UO9jRvqJUpBSsstmEDcdn1wIBu3gcFFsbKzYlg==
