@@ -15,7 +15,7 @@ export function createStore(key: string='please-assign-value', options?: Option)
   const initOptions: UseStorageOptions<Data> = {}
   if (options?.crypto) {
     initOptions.serializer = {
-      read: (v: any) => v ? JSON.parse(decrypt(v)) : null,
+      read: (v: any) => JSON.parse(decrypt(v)),
       write: (v: any) => encrypt(JSON.stringify(v)),
     }
   }
