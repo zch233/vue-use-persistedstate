@@ -1,38 +1,48 @@
-import {useLocalStorage, useSessionStorage, UseStorageOptions} from "@vueuse/core";
-import {toRefs} from 'vue'
+import { useLocalStorage, useSessionStorage, UseStorageOptions } from '@vueuse/core';
+import { computed } from 'vue';
 import CryptoJS from 'crypto-js';
 
-let storeKey = ''
+let storeKey = '';
 
-export type Data = {[key: string]: any}
+export type Data = { [key: string]: any };
 
 interface Option extends UseStorageOptions<Data> {
   crypto?: boolean;
 }
 
-export function createStore(key: string='please-assign-value', options?: Option) {
-  storeKey = key
-  const initOptions: UseStorageOptions<Data> = {}
+export function createStore(key = 'please-assign-value', options?: Option) {
+  storeKey = key;
+  const initOptions: UseStorageOptions<Data> = {};
   if (options?.crypto) {
     initOptions.serializer = {
       read: (v: any) => JSON.parse(decrypt(v)),
       write: (v: any) => encrypt(JSON.stringify(v)),
-    }
+    };
   }
-  const storeLocalStorage = useLocalStorage<Data>(key, {}, {...initOptions, ...options})
-  const storeSessionStorage = useSessionStorage<Data>(key, {}, {...initOptions, ...options})
+  const storeLocalStorage = useLocalStorage<Data>(key, {}, { ...initOptions, ...options });
+  const storeSessionStorage = useSessionStorage<Data>(key, {}, { ...initOptions, ...options });
   return {
     useLocalStorage: (key: string, initialValue: any) => {
-      const store = storeLocalStorage
-      store.value = {...store.value, [key]: store.value[key] || initialValue }
-      return toRefs(store.value)[key]!
+      const store = storeLocalStorage;
+      store.value[key] = store.value[key] || initialValue;
+      return computed({
+        get: () => store.value[key],
+        set: (val) => {
+          store.value[key] = val;
+        }
+      });
     },
     useSessionStorage: (key: string, initialValue: any) => {
-      const store = storeSessionStorage
-      store.value = {...store.value, [key]: store.value[key] || initialValue }
-      return toRefs(store.value)[key]!
-    }
-  }
+      const store = storeSessionStorage;
+      store.value[key] = store.value[key] || initialValue;
+      return computed({
+        get: () => store.value[key],
+        set: (val) => {
+          store.value[key] = val;
+        }
+      });
+    },
+  };
 }
 
 export const decrypt = (data: any) => {
