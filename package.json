@@ -10,8 +10,9 @@
     "dist/*"
   ],
   "scripts": {
-    "prepublishOnly": "tsc",
-    "release": "standard-version"
+    "prepublishOnly": "yarn release && yarn compile",
+    "release": "standard-version",
+    "compile": "tsc"
   },
   "dependencies": {
     "@vueuse/core": "9.1.1",
